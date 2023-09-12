@@ -3,9 +3,10 @@ const { createApp } = Vue
   createApp({
     data() {
       return {
-
+        interval: null,
         activeImage: 0,
-
+        zoomImg: false,
+        thumbImg: '',
         slides: [
             {
                 image: './assets/img/01.webp',
@@ -35,6 +36,9 @@ const { createApp } = Vue
         ]              
       }
     },
+    mounted(){
+        this.startCounter();
+    },
     methods: {
       next(){
         this.activeImage++
@@ -47,6 +51,17 @@ const { createApp } = Vue
         if (this.activeImage < 0){
           this.activeImage = 4
         }
+      },
+      onThumbClick(url){
+        this.zoomImg = true;
+        this.thumbImg = url
+      },
+      stopCounter(){
+        clearInterval(this.interval)
+      },
+      startCounter(){
+        this.interval = setInterval(this.next, 3000)
       }
+
     }
   }).mount('#app')
